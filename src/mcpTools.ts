@@ -268,6 +268,16 @@ export class McpToolHandler {
 						required: ["name", "fields", "templates"],
 					},
 				},
+				{
+					name: "sync",
+					description:
+						"Synchronize Anki collection with AnkiWeb server. This will upload/download changes to keep local and remote data synchronized.",
+					inputSchema: {
+						type: "object",
+						properties: {},
+						required: [],
+					},
+				},
 			],
 		};
 	}
@@ -316,6 +326,10 @@ export class McpToolHandler {
 					return this.updateNote(args);
 				case "delete_note":
 					return this.deleteNote(args);
+
+				// Sync tool
+				case "sync":
+					return this.syncAnki();
 
 				// Dynamic model-specific note creation
 				default:
@@ -934,5 +948,77 @@ export class McpToolHandler {
 				},
 			],
 		};
+	}
+
+	/**
+	 * Sync Anki collection with AnkiWeb
+	 */
+	private async syncAnki(): Promise<{
+		content: {
+			type: string;
+			text: string;
+		}[];
+	}> {
+		try {
+			const syncResult = await this.ankiClient.sync();
+
+			return {
+				content: [
+					{
+						type: "text",
+						text: JSON.stringify(
+							{
+								success: true,
+								message:
+									"Anki collection synchronized successfully with AnkiWeb",
+								syncResult: syncResult, // Include the actual AnkiConnect response
+								timestamp: new Date().toISOString(),
+							},
+							null,
+							2,
+						),
+					},
+				],
+			};
+		} catch (error) {
+			// Handle sync-specific errors more gracefully
+			const errorMessage =
+				error instanceof Error ? error.message : String(error);
+
+			// Provide more helpful error messages for common sync issues
+			let friendlyMessage = errorMessage;
+			if (errorMessage.includes("sync unavailable")) {
+				friendlyMessage =
+					"Sync is unavailable. Please check your AnkiWeb account and internet connection.";
+			} else if (errorMessage.includes("network error")) {
+				friendlyMessage =
+					"Network error occurred during sync. Please check your internet connection and try again.";
+			} else if (errorMessage.includes("authentication")) {
+				friendlyMessage =
+					"Authentication failed. Please check your AnkiWeb credentials in Anki.";
+			} else if (errorMessage.includes("collection locked")) {
+				friendlyMessage =
+					"Collection is locked. Please close any open dialogs in Anki and try again.";
+			}
+
+			return {
+				content: [
+					{
+						type: "text",
+						text: JSON.stringify(
+							{
+								success: false,
+								error: friendlyMessage,
+								originalError: errorMessage,
+								timestamp: new Date().toISOString(),
+							},
+							null,
+							2,
+						),
+					},
+				],
+				isError: true,
+			};
+		}
 	}
 }

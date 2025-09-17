@@ -1,7 +1,7 @@
 {
-  "name": "anki-mcp-server",
-  "version": "0.1.5",
-  "description": "A Model Context Protocol (MCP) server that enables LLMs to interact with Anki flashcard software through AnkiConnect",
+  "name": "@murphylo/anki-mcp-server",
+  "version": "0.1.6",
+  "description": "A Model Context Protocol (MCP) server that enables LLMs to interact with Anki flashcard software through AnkiConnect (with custom features)",
   "type": "module",
   "bin": {
     "anki-mcp-server": "dist/index.js"
@@ -18,7 +18,7 @@
     "lint": "biome lint .",
     "check": "biome check --apply .",
     "inspector": "npx @modelcontextprotocol/inspector build/index.js",
-    "test": "jest --runInBand --detectOpenHandles",
+    "test": "jest --runInBand --detectOpenHandles --passWithNoTests",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch",
     "test:coverage": "NODE_OPTIONS=--experimental-vm-modules jest --coverage",
     "test:language": "node test-language.js"
@@ -57,16 +57,16 @@
     "ankiconnect",
     "model-context-protocol"
   ],
-  "author": "nailuoGG",
+  "author": "murphylo",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nailuoGG/anki-mcp-server.git"
+    "url": "git+https://github.com/murphylo/anki-mcp-server.git"
   },
   "bugs": {
-    "url": "https://github.com/nailuoGG/anki-mcp-server/issues"
+    "url": "https://github.com/murphylo/anki-mcp-server/issues"
   },
-  "homepage": "https://github.com/nailuoGG/anki-mcp-server#readme",
+  "homepage": "https://github.com/murphylo/anki-mcp-server#readme",
   "engines": {
     "node": ">=18.0.0"
   },

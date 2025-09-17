@@ -461,4 +461,23 @@ export class AnkiClient {
 			);
 		}
 	}
+
+	/**
+	 * Synchronize Anki data to AnkiWeb
+	 * This triggers Anki's built-in sync mechanism
+	 * @returns The sync result data from AnkiConnect
+	 */
+	async sync(): Promise<any> {
+		try {
+			const result = await this.executeWithRetry(() =>
+				// @ts-ignore - yanki-connect type definitions may be incomplete for sync
+				this.client.invoke("sync"),
+			);
+			return result;
+		} catch (error) {
+			throw this.wrapError(
+				error instanceof Error ? error : new Error(String(error)),
+			);
+		}
+	}
 }

@@ -1,6 +1,6 @@
-# Anki MCP Server
+# Anki MCP Server (with Sync Support)
 
-A Model Context Protocol (MCP) server that enables LLMs to interact with Anki flashcard software through AnkiConnect.
+A Model Context Protocol (MCP) server that enables LLMs to interact with Anki flashcard software through AnkiConnect (with custom features).
 
 ![Anki Icon](./assets/icon.png)
 
@@ -18,6 +18,7 @@ A Model Context Protocol (MCP) server that enables LLMs to interact with Anki fl
 - `list_note_types` - List all available note types
 - `create_note_type` - Create a new note type
 - `get_note_type_info` - Get detailed structure of a note type
+- `sync` - **NEW!** Synchronize Anki collection with AnkiWeb server (useful for [headless Anki deployments](https://github.com/ThisIsntTheWay/headless-anki) or programmatic workflows)
 
 ### Resources
 - `anki://decks/all` - Complete list of available decks
@@ -41,7 +42,7 @@ Add the server to your claude_desktop_config.json:
   "mcpServers": {
     "anki": {
       "command": "npx",
-      "args": ["--yes","anki-mcp-server"]
+      "args": ["--yes","@murphylo/anki-mcp-server"]
     }
   }
 }
@@ -56,7 +57,7 @@ Add the server to your Cline MCP settings file inside VSCode's settings `cline_m
   "mcpServers": {
     "anki": {
       "command": "npx",
-      "args": ["--yes","anki-mcp-server"]
+      "args": ["--yes","@murphylo/anki-mcp-server"]
     }
   }
 }
@@ -129,7 +130,10 @@ Create a cloze card in the "Programming" deck with:
 Text: In JavaScript, {{c1::const}} declares a block-scoped variable that cannot be {{c2::reassigned}}.
 ```
 
-
+4. Sync your collection with AnkiWeb:
+```
+Please sync my Anki collection with AnkiWeb
+```
 
 ## Contributing
 
@@ -137,10 +141,6 @@ Text: In JavaScript, {{c1::const}} declares a block-scoped variable that cannot 
 2. Create your feature branch
 3. Run tests: `npm test`
 4. Submit a pull request
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=nailuoGG/anki-mcp-server&type=Date)](https://star-history.com/#nailuoGG/anki-mcp-server&Date)
 
 ## Credits
 
