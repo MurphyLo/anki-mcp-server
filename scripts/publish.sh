@@ -63,6 +63,7 @@ VERSION=$(node -p "require('./package.json').version")
 
 echo "🏷️  创建git标签 v$VERSION..."
 git tag "v$VERSION"
-git push origin "v$VERSION"
+git push --force origin master   # 强制推送代码到master分支
+git push origin "v$VERSION"      # 推送版本标签
 
 echo "🎉 发布完成！"
