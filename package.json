@@ -1,6 +1,6 @@
 {
   "name": "@murphylo/anki-mcp-server",
-  "version": "0.1.6",
+  "version": "0.1.8",
   "description": "A Model Context Protocol (MCP) server that enables LLMs to interact with Anki flashcard software through AnkiConnect (with custom features)",
   "type": "module",
   "bin": {
